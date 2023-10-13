@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+##############################################################################
+# Set default required parameters
+# Definition:
+#   SCRIPT_DIR      : Root directory of the script
+#   CONFIG_DIR      : Directory including all configuration files
+#   FUNC_DIR        : Directory including all function files
+##############################################################################
+[ -z "${SCRIPT_DIR}" ]   && SCRIPT_DIR="$(dirname $0)"              # Absolut script directory
+[ -z "${CONFIG_DIR}" ]   && CONFIG_DIR="${SCRIPT_DIR}/configs"      # Absolut script config directory
+[ -z "${FUNC_DIR}" ]     && FUNC_DIR="${SCRIPT_DIR}/functions"      # Absolut script functions directory
+
+##########################################################################
+# Definition of backup directory, secrets backup directory and script log
+##########################################################################
+BACKUPDIR='/var/opt/gitlab/backups'
+SECRETDIR='/etc/gitlab/config_backup'
+LOGFILE='/var/log/gitlab/backuphandler.log'

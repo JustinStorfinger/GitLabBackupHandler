@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+#
+# Copyright (c) 2022 Justin Storfinger [info@jstorfinger.de]
+#
+# Runner for given action
+#
+
+# Source configuration files
+if [ ! -f "$(dirname "$(readlink -f "$0")")/configs/config.cnf" ]; then
+    echo "Configuration file '$(dirname "$(readlink -f "$0")")/configs/config.cnf' is missing!!" 
+    exit 1
+else
+    source "$(dirname "$(readlink -f "$0")")/configs/config.cnf"
+
+    # Source all available functions
+    for function in ${FUNC_DIR}/*.sh; do
+        source "${function}"
+    done
+fi
+
+##################################################
+# Call functions based on specified arguments
+# Globals:
+#   None
+# Arguments:
+#   key
+##################################################
+
+while [[ ${#} -gt 0 ]]; do
+    key="${1}"
+    case ${key} in
+        backup)
+            gitlab::backup
+            exit 0 ;;
+        restore)
+            gitlab::restore
+            exit 0 ;;
+        -h|--help|help|usage)
+            print::usage
+            exit 0 ;;
+        *)
+            print::usage
+            exit 1 ;;
+    esac
+done
